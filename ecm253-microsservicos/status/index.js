@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express();
+const axios = require('axios');
 app.use(express.json());
 
 const funcoes = {
     PedidoCriado: (pedido) => {
+        console.log('Entrei para atualizar...')
         pedido.status = 'Na cozinha ...';
-        axios.post('http://192.168.0.11:1000/eventos', {
+        axios.post('http://localhost:1000/eventos', {
             tipo: 'PedidoEnviado',
             dados: pedido
         });
@@ -14,7 +16,7 @@ const funcoes = {
 
 app.post('/eventos', (req, res) => {
     try {
-        // 
+        funcoes[req.body.tipo](req.body.dados);
     } catch (e) { }
     res.status(200).send({ msg: 'ok'});
 });

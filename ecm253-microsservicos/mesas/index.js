@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
 const axios = require('axios');
+const { v4: uuidv4 } = require('uuid')
+const date = new Date();
 app.use(express.json());
 
 // const mesas = {};
-const mesas = [];
+const BDmesa = {};
 
 const formatString = (mesa) => {
     // Função para deixar tudo lower case, e trocar espaço por -
@@ -14,22 +16,27 @@ const formatString = (mesa) => {
 };
 
 app.get('/mesas', (req, res) => {
-    res.send(mesas);
+    res.send(BDmesa);
 });
 
 app.post('/mesas', async (req, res) => {
     // console.log(req.body);
+    const idMesa = uuidv4();
     const mesa = formatString(req.body['mesa']);
+    const horaChegada = date.toLocaleTimeString()
     // console.log(mesa);
     // mesas[mesa] = {};
-    mesas.push(mesa)
-    await axios.post('http://192.168.0.11:1000/eventos', {
+    // mesas.push(mesa)
+    BDmesa[idMesa] = {idLocalMesa: mesa, horaChegada}
+    await axios.post('http://localhost:1000/eventos', {
         tipo: 'MesaCriada',
         dados: {
-            mesa
+            idMesa,
+            mesa,
+            horaChegada
         },
     });
-    res.status(201).send(mesas);
+    res.status(201).send(BDmesa);
 });
 
 app.post('/eventos', (req, res) => {
