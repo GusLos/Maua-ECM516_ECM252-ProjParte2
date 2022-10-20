@@ -36,17 +36,17 @@ function definirPedido(req){
     if(tipoPedido === tipo.PF){
         const { prato } = req.body
         console.log('Escolheu PF.')
-        return { prato }
+        return { prato, status: 'Enviando para cozinha...' }
     }
     if (tipoPedido === tipo.MONTAGEM){
         const { prato, acompanhamentos  } = req.body
         console.log('Escolheu Montagem.')
-        return { prato, acompanhamentos }
+        return { prato, acompanhamentos, status: 'Enviando para cozinha...' }
     }
     if (tipoPedido === tipo.BEBIDA){
         const { bebida } = req.body
         console.log('Escolheu Bebida.')
-        return { bebida }
+        return { bebida, status: 'Enviando para copa...' }
     }
     console.log('Não fiz nada.')
 }
@@ -68,12 +68,12 @@ app.post('/mesas/:idMesa/pedidos', async (req, res) => {
     const pedidosDaMesa = pedidosPorMesa[req.params.idMesa] || [];
     const horaPedido = date.toLocaleTimeString();
 
-    pedidosDaMesa.push({idPedido, horaPedido, ...pedido, status: 'Enviando para cozinha...'})
+    pedidosDaMesa.push({idPedido, horaPedido, ...pedido})
     // pedidosDaMesa.push({ idMesa: req.params.idMesa, idPedido: idPedido, horaPedido, prato, montagem, acompanhamentos, status: 'Enviando para cozinha...' });
 
     pedidosPorMesa[req.params.idMesa] = pedidosDaMesa;
 
-    pedidos[idPedido] = {horaPedido, ...pedido, status: 'Enviando para cozinha...'}
+    pedidos[idPedido] = {horaPedido, ...pedido}
 
     console.log(pedidos)
 
