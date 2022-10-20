@@ -3,9 +3,12 @@ const app = express();
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const date = new Date();
+const tipo = require('./tipos-pedido.json')
 app.use(express.json());
 
 const pedidosPorMesa = {};
+
+const pedidos = {};
 
 const funcoes = {
     PedidoEnviado: (pedido) => {
@@ -27,31 +30,67 @@ const funcoes = {
     }
 }
 
+function definirPedido(req){
+    tipoPedido = req.body.tipoPedido;
+    // console.log(req)
+    if(tipoPedido === tipo.PF){
+        const { prato } = req.body
+        console.log('Escolheu PF.')
+        return { prato }
+    }
+    if (tipoPedido === tipo.MONTAGEM){
+        const { prato, acompanhamentos  } = req.body
+        console.log('Escolheu Montagem.')
+        return { prato, acompanhamentos }
+    }
+    if (tipoPedido === tipo.BEBIDA){
+        const { bebida } = req.body
+        console.log('Escolheu Bebida.')
+        return { bebida }
+    }
+    console.log('Não fiz nada.')
+}
+
 app.get('/mesas/:idmesa/pedidos', (req, res) => {
     res.send(pedidosPorMesa[req.params.idmesa] || [])
 });
 
+app.get('/pedidos', (req, res) => {
+    res.send(pedidos)
+})
+
 app.post('/mesas/:idMesa/pedidos', async (req, res) => {
     const idPedido = uuidv4();
-    const { prato, montagem, acompanhamentos } = req.body;
+
+    const pedido = definirPedido(req)
+    // const { prato, montagem, acompanhamentos } = req.body; // +ou-
+
     const pedidosDaMesa = pedidosPorMesa[req.params.idMesa] || [];
     const horaPedido = date.toLocaleTimeString();
-    pedidosDaMesa.push({ idMesa: req.params.idMesa, idPedido: idPedido, horaPedido, prato, montagem, acompanhamentos, status: 'Enviando para cozinha...' });
+
+    pedidosDaMesa.push({idPedido, horaPedido, ...pedido, status: 'Enviando para cozinha...'})
+    // pedidosDaMesa.push({ idMesa: req.params.idMesa, idPedido: idPedido, horaPedido, prato, montagem, acompanhamentos, status: 'Enviando para cozinha...' });
+
     pedidosPorMesa[req.params.idMesa] = pedidosDaMesa;
-    console.log(pedidosPorMesa)
-    await axios.post('http://localhost:1000/eventos', {
-        tipo: 'PedidoCriado',
-        dados: {
-            idMesa: req.params.idMesa,
-            idPedido: idPedido,
-            horaPedido,
-            prato,
-            montagem,
-            acompanhamentos,
-            status: 'Enviando para cozinha...'
-        }
-    });
-    res.status(201).send(pedidosDaMesa);
+
+    pedidos[idPedido] = {horaPedido, ...pedido, status: 'Enviando para cozinha...'}
+
+    console.log(pedidos)
+
+    // await axios.post('http://localhost:1000/eventos', {
+    //     tipo: 'PedidoCriado',
+    //     dados: {
+    //         idMesa: req.params.idMesa,
+    //         idPedido: idPedido,
+    //         horaPedido,
+    //         prato,
+    //         montagem,
+    //         acompanhamentos,
+    //         status: 'Enviando para cozinha...'
+    //     }
+    // });
+    // res.status(201).send(pedidosDaMesa);
+    res.status(200).send({msg: 'OK'})
 });
 
 app.post('/eventos', (req, res) => {
