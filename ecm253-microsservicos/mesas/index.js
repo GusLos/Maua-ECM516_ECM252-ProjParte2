@@ -6,37 +6,31 @@ const date = new Date();
 app.use(express.json());
 
 // const mesas = {};
-const BDmesa = {};
+const BDmesas = [];
+
 
 const formatString = (mesa) => {
-    // Função para deixar tudo lower case, e trocar espaço por -
-    const mesaL = mesa.toLowerCase();
-    const mesaFormated = mesaL.replaceAll(' ', '-');
+    const nomeMesaLocal = mesa.toLowerCase();
+    const mesaFormated = nomeMesaLocal.replaceAll(' ', '-');
     return mesaFormated;
 };
 
 app.get('/mesas', (req, res) => {
-    res.send(BDmesa);
+    res.send(BDmesas);
 });
 
 app.post('/mesas', async (req, res) => {
-    // console.log(req.body);
     const idMesa = uuidv4();
     const mesa = formatString(req.body['mesa']);
     const horaChegada = date.toLocaleTimeString()
-    // console.log(mesa);
-    // mesas[mesa] = {};
-    // mesas.push(mesa)
-    BDmesa[idMesa] = {idLocalMesa: mesa, horaChegada}
+    const status = 'Abrindo...'
+    const novaMesa = {idMesa, mesa, horaChegada, status}
+    BDmesas.push(novaMesa)
     await axios.post('http://localhost:1000/eventos', {
         tipo: 'MesaCriada',
-        dados: {
-            idMesa,
-            mesa,
-            horaChegada
-        },
+        dados:  novaMesa
     });
-    res.status(201).send(BDmesa);
+    res.status(200).send({msg: 'Ok'});
 });
 
 app.post('/eventos', (req, res) => {
