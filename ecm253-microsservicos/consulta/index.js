@@ -7,7 +7,7 @@ const BDconsulta = {};
 
 const funcoes = {
     MesaCriada: (mesa) => {
-        BDconsulta[mesa.idMesa] = {mesa: mesa.mesa};
+        BDconsulta[mesa.idMesa] = {mesa: mesa.mesa, horaChegada: mesa.horaChegada, status: mesa.status};
     },
     PedidoCriado: (pedido) => {
         const pedidos = BDconsulta[pedido.idMesa]['pedidos'] || [];
