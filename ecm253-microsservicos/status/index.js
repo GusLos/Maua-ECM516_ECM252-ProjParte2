@@ -5,12 +5,19 @@ app.use(express.json());
 
 const funcoes = {
     PedidoCriado: (pedido) => {
-        console.log('Entrei para atualizar...')
+        // console.log('Entrei para atualizar...')
         pedido.status = 'Na cozinha ...';
         axios.post('http://localhost:1000/eventos', {
             tipo: 'PedidoEnviado',
             dados: pedido
         });
+    },
+    MesaCriada: (mesa) => {
+        mesa.status = 'Aberta...';
+        axios.post('http://localhost:1000/eventos', {
+            tipo: 'AtualizarMesa',
+            dados: mesa
+        })
     }
 };
 
