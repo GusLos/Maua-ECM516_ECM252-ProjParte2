@@ -6,16 +6,27 @@ const date = new Date();
 const tipo = require('./tipos-pedido.json')
 app.use(express.json());
 
-const pedidosPorMesa = {};
+// const pedidosPorMesa = {};
 
-const pedidos = {};
+const BDpedidos = [];
 
 const funcoes = {
     PedidoEnviado: (pedido) => {
-        console.log('Entrei no pedido mas nã atualizaei.')
-        const pedidos = pedidosPorMesa[pedido.idMesa];
-        const pedidoParaAtualizar = pedidos.find(o => o.idPedido === pedido.idPedido);
-        pedidoParaAtualizar.status = pedido.status;
+        // console.log('Entrei no pedido mas nã atualizaei.')
+        // const pedidos = pedidosPorMesa[pedido.idMesa];
+
+        const pedidoParaAtualizar = BDpedidos.find(p => p.idPedido === pedido.idPedido);
+        // const pedidoParaAtualizar = pedidos[pedido.idPedido]
+
+        const indicePedidoParaAtualizar = BDpedidos.indexOf(pedidoParaAtualizar)
+
+        if (indicePedidoParaAtualizar > -1){
+            BDpedidos[indicePedidoParaAtualizar] = pedido
+        }
+        else{
+            console.log('Falha ao atualizar pedido. Pedido não existe.')
+        }
+        
         axios.post('http://localhost:1000/eventos', {
             tipo: 'PedidoAtualizado',
             dados: {
@@ -51,12 +62,14 @@ function definirPedido(req){
     console.log('Não fiz nada.')
 }
 
-app.get('/mesas/:idmesa/pedidos', (req, res) => {
-    res.send(pedidosPorMesa[req.params.idmesa] || [])
+app.get('/mesas/:idMesa/pedidos', (req, res) => {
+    // res.send(pedidosPorMesa[req.params.idmesa] || [])
+    const pedidosPorMesa = BDpedidos.filter((pedido) => pedido.idMesa === req.params.idMesa) || [];
+    res.send(pedidosPorMesa)
 });
 
 app.get('/pedidos', (req, res) => {
-    res.send(pedidos)
+    res.send(BDpedidos)
 })
 
 app.post('/mesas/:idMesa/pedidos', async (req, res) => {
@@ -65,17 +78,18 @@ app.post('/mesas/:idMesa/pedidos', async (req, res) => {
     const pedido = definirPedido(req)
     // const { prato, montagem, acompanhamentos } = req.body; // +ou-
 
-    const pedidosDaMesa = pedidosPorMesa[req.params.idMesa] || [];
+    // const pedidosDaMesa = pedidosPorMesa[req.params.idMesa] || [];
     const horaPedido = date.toLocaleTimeString();
 
-    pedidosDaMesa.push({idPedido, horaPedido, ...pedido})
+    // pedidosDaMesa.push({idPedido, idMesa:req.params.idMesa , horaPedido, ...pedido})
     // pedidosDaMesa.push({ idMesa: req.params.idMesa, idPedido: idPedido, horaPedido, prato, montagem, acompanhamentos, status: 'Enviando para cozinha...' });
 
-    pedidosPorMesa[req.params.idMesa] = pedidosDaMesa;
+    // pedidosPorMesa[req.params.idMesa] = pedidosDaMesa;
 
-    pedidos[idPedido] = {horaPedido, ...pedido}
+    BDpedidos.push({idPedido, idMesa: req.params.idMesa, tipoPedido: req.body.tipoPedido, horaPedido, ...pedido})
+    // pedidos[idPedido] = {horaPedido, ...pedido}
 
-    console.log(pedidos)
+    console.log(BDpedidos)
 
     // await axios.post('http://localhost:1000/eventos', {
     //     tipo: 'PedidoCriado',
