@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid')
-// const date = new Date();
 const statusTipo = require('../../models/tipos-status.json');
 app.use(express.json());
 
@@ -10,7 +9,7 @@ const BDmesas = [];
 
 const funcoes = {
     MesaAberta: (mesa) => {
-        const mesaParaAtualizar = BDmesas.find(m => m.idPedido === mesa.idMesa);
+        const mesaParaAtualizar = BDmesas.find(m => m.idMesa === mesa.idMesa);
         const indiceMesaParaAtualizar = BDmesas.indexOf(mesaParaAtualizar);
         if (indiceMesaParaAtualizar > -1){
             BDmesas[indiceMesaParaAtualizar] = mesa;
