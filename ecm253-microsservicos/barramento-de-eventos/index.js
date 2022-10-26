@@ -7,9 +7,12 @@ const eventos = [];
 
 app.post('/eventos', (req, res) => {
     console.log(req.body.tipo)
-    if (req.body.tipo == "PedidoEnviado"){
-        console.log(req.body.dados)
-    }
+    // if (req.body.tipo == "PedidoEnviado"){
+    //     console.log(req.body.dados)
+    // }
+    // if (req.body.tipo == "MesaCriada"){
+    //     console.log(req.body.dados)
+    // }
     const evento = req.body;
     eventos.push(evento);
     // envia o evento para microserviço de mesas
@@ -20,7 +23,7 @@ app.post('/eventos', (req, res) => {
     axios.post('http://localhost:4000/eventos', evento);
     // envia o evento para microserviço de status
     axios.post('http://localhost:5000/eventos', evento);
-    res.status(200);
+    res.status(200).send({msg: 'Ok'});
 });
 
 app.get('/eventos', (req, res) => {
