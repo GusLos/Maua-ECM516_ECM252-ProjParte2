@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const axios = require('axios');
+const tipo = require('../../models/tipos-pedido.json')
 app.use(express.json());
 
 const BDconsulta = {};
@@ -13,11 +14,11 @@ const funcoes = {
         BDconsulta[mesa.idMesa].status = mesa.status
     },
     PedidoCriado: (pedido) => {
-        const pedidos = BDconsulta[pedido.idMesa]['pedidos'] || [];
-        const pedidoNovo = { idPedido: pedido.idPedido, horaPedido: pedido.horaPedido, prato: pedido.prato, montagem: pedido.montagem, acompanhamentos: pedido.acompanhamentos }
-        pedidos.push(pedidoNovo);
-        // pedidos.push(pedido);
-        BDconsulta[pedido.idMesa]['pedidos'] = pedidos;
+        const idMesaPedidoNovo = pedido.idMesa;
+        delete pedido.idMesa
+        const pedidos = BDconsulta[idMesaPedidoNovo]['pedidos'] || [];
+        pedidos.push(pedido);
+        BDconsulta[idMesaPedidoNovo]['pedidos'] = pedidos;
     }
 };
 
