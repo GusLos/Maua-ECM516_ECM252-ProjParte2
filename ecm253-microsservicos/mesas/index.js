@@ -3,9 +3,9 @@ const app = express();
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid')
 const date = new Date();
+const statusTipo = require('../../models/tipos-status.json');
 app.use(express.json());
 
-// const mesas = {};
 const BDmesas = [];
 
 const funcoes = {
@@ -34,10 +34,10 @@ app.get('/mesas', (req, res) => {
 app.post('/mesas', async (req, res) => {
     const idMesa = uuidv4();
     const mesa = formatString(req.body['mesa']);
-    const horaChegada = date.toLocaleTimeString()
-    const status = 'Abrindo...'
-    const novaMesa = {idMesa, mesa, horaChegada, status}
-    BDmesas.push(novaMesa)
+    const horaChegada = date.toLocaleTimeString();
+    const status = statusTipo.ABRINDO_MESA;
+    const novaMesa = {idMesa, mesa, horaChegada, status};
+    BDmesas.push(novaMesa);
     await axios.post('http://localhost:1000/eventos', {
         tipo: 'MesaCriada',
         dados:  novaMesa
