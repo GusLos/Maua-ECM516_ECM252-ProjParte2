@@ -15,7 +15,7 @@ const funcoes = {
     MesaCriada: (mesa) => {
         mesa.status = 'Aberta...';
         axios.post('http://localhost:1000/eventos', {
-            tipo: 'AtualizarMesa',
+            tipo: 'MesaAberta',
             dados: mesa
         })
     }

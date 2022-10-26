@@ -8,6 +8,18 @@ app.use(express.json());
 // const mesas = {};
 const BDmesas = [];
 
+const funcoes = {
+    MesaAberta: (mesa) => {
+        const mesaParaAtualizar = BDmesas.find(m => m.idPedido === mesa.idMesa);
+        const indiceMesaParaAtualizar = BDmesas.indexOf(mesaParaAtualizar)
+        if (indiceMesaParaAtualizar > -1){
+            BDmesas[indiceMesaParaAtualizar] = mesa
+        }
+        else{
+            console.log('Falha ao atualizar mesa. Mesa não existe.')
+        }
+    }
+}
 
 const formatString = (mesa) => {
     const nomeMesaLocal = mesa.toLowerCase();
