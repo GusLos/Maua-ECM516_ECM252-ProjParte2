@@ -1,19 +1,20 @@
 const express = require('express');
 const app = express();
 const axios = require('axios');
+const status = require('../../models/tipos-status.json')
 app.use(express.json());
 
 const funcoes = {
     PedidoCriado: (pedido) => {
         // console.log('Entrei para atualizar...')
-        pedido.status = 'Na cozinha ...';
+        pedido.status = status.NA_COZINHA;
         axios.post('http://localhost:1000/eventos', {
             tipo: 'PedidoEnviado',
             dados: pedido
         });
     },
     MesaCriada: (mesa) => {
-        mesa.status = 'Aberta...';
+        mesa.status = status.MESA_ABERTA;
         axios.post('http://localhost:1000/eventos', {
             tipo: 'MesaAberta',
             dados: mesa
