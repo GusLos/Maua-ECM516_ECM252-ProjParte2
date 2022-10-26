@@ -6,7 +6,6 @@ app.use(express.json());
 
 const funcoes = {
     PedidoCriado: (pedido) => {
-        // console.log('Entrei para atualizar...')
         pedido.status = status.NA_COZINHA;
         axios.post('http://localhost:1000/eventos', {
             tipo: 'PedidoEnviado',
