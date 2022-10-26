@@ -9,6 +9,9 @@ const funcoes = {
     MesaCriada: (mesa) => {
         BDconsulta[mesa.idMesa] = {mesa: mesa.mesa, horaChegada: mesa.horaChegada, status: mesa.status};
     },
+    MesaAberta: (mesa) => {
+        BDconsulta[mesa.idMesa].status = mesa.status
+    },
     PedidoCriado: (pedido) => {
         const pedidos = BDconsulta[pedido.idMesa]['pedidos'] || [];
         const pedidoNovo = { idPedido: pedido.idPedido, horaPedido: pedido.horaPedido, prato: pedido.prato, montagem: pedido.montagem, acompanhamentos: pedido.acompanhamentos }
