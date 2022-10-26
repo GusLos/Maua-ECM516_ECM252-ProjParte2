@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid')
-const date = new Date();
+// const date = new Date();
 const statusTipo = require('../../models/tipos-status.json');
 app.use(express.json());
 
@@ -11,12 +11,12 @@ const BDmesas = [];
 const funcoes = {
     MesaAberta: (mesa) => {
         const mesaParaAtualizar = BDmesas.find(m => m.idPedido === mesa.idMesa);
-        const indiceMesaParaAtualizar = BDmesas.indexOf(mesaParaAtualizar)
+        const indiceMesaParaAtualizar = BDmesas.indexOf(mesaParaAtualizar);
         if (indiceMesaParaAtualizar > -1){
-            BDmesas[indiceMesaParaAtualizar] = mesa
+            BDmesas[indiceMesaParaAtualizar] = mesa;
         }
         else{
-            console.log('Falha ao atualizar mesa. Mesa não existe.')
+            console.log('Falha ao atualizar mesa. Mesa não existe.');
         }
     }
 }
@@ -34,6 +34,7 @@ app.get('/mesas', (req, res) => {
 app.post('/mesas', async (req, res) => {
     const idMesa = uuidv4();
     const mesa = formatString(req.body['mesa']);
+    const date = new Date();
     const horaChegada = date.toLocaleTimeString();
     const status = statusTipo.ABRINDO_MESA;
     const novaMesa = {idMesa, mesa, horaChegada, status};
@@ -47,7 +48,7 @@ app.post('/mesas', async (req, res) => {
 
 app.post('/eventos', (req, res) => {
     try {
-        console.log(req.body);
+        funcoes[req.body.tipo](req.body.dados);
     } catch (e) { }
     res.status(200).send({ msg: 'ok' });
 });
