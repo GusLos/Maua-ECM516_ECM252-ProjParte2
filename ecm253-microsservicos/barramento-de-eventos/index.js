@@ -23,11 +23,13 @@ app.post('/eventos', (req, res) => {
     axios.post('http://localhost:4000/eventos', evento);
     // envia o evento para microserviço de status
     axios.post('http://localhost:5000/eventos', evento);
+    // envia o evento para microserviço de contas
+    axios.post('http://localhost:6000/eventos', evento)
     res.status(200).send({msg: 'Ok'});
 });
 
 app.get('/eventos', (req, res) => {
-    res.send(eventos)
+    res.status(200).send(eventos)
 })
 
 app.listen(1000, () => {
