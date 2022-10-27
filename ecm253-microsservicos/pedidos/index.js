@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
-const date = new Date();
 const tipo = require('../../models/tipos-pedido.json');
 const status = require('../../models/tipos-status.json');
 app.use(express.json());
@@ -65,6 +64,7 @@ app.get('/pedidos', (req, res) => {
 app.post('/mesas/:idMesa/pedidos', async (req, res) => {
     const idPedido = uuidv4();
     const pedido = definirPedido(req);
+    const date = new Date();
     const horaPedido = date.toLocaleTimeString();
     const pedidoNovo = {idPedido, idMesa: req.params.idMesa, tipoPedido: req.body.tipoPedido, horaPedido, ...pedido};
     BDpedidos.push(pedidoNovo);
