@@ -14,18 +14,20 @@ const funcoes = {
     },
     PedidoCriado: (pedido) => {
         const idMesaPedidoNovo = pedido.idMesa;
-        delete pedido.idMesa
-        const pedidos = BDconsulta[idMesaPedidoNovo]['pedidos'] || [];
-        pedidos.push(pedido);
+        const idNovoPedido = pedido.idPedido;
+        delete pedido.idMesa;
+        delete pedido.idPedido;
+        const pedidos = BDconsulta[idMesaPedidoNovo]['pedidos'] || {};
+        pedidos[idNovoPedido] = pedido;
         BDconsulta[idMesaPedidoNovo]['pedidos'] = pedidos;
     },
     PedidoEnviado: (pedidoAtualizado) => {
-        const idMesaPedidoNovo = pedidoAtualizado.idMesa;
-        delete pedidoAtualizado.idMesa
-        const pedidos = BDconsulta[idMesaPedidoNovo]['pedidos'] || [];
-        const pedidoVelho = pedidos.find(p => p.idPedido === pedidoAtualizado.idPedido)
-        pedidos.pop(pedidoVelho)
-        pedidos.push(pedidoAtualizado);
+        const idMesaPedidoAtualizado = pedidoAtualizado.idMesa;
+        const idPedidoAtualizado = pedidoAtualizado.idPedido;
+        delete pedidoAtualizado.idMesa;
+        delete pedidoAtualizado.idPedido;
+        const pedidos = BDconsulta[idMesaPedidoAtualizado]['pedidos'] || {};
+        pedidos[idPedidoAtualizado] = pedidoAtualizado
         BDconsulta[idMesaPedidoNovo]['pedidos'] = pedidos;
     }
 };
