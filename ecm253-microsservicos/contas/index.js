@@ -42,6 +42,14 @@ const funcoes = {
         else {
             console.log('Falha ao adicionar valor na conta da mesa. Mesa não encontrada.');
         }
+        axios.post('http://localhost:1000/eventos', {
+            tipo: 'DefinirValorPedido',
+            dados: {
+                idMesa: novoPedido.idMesa,
+                idPedido: novoPedido.idPedido,
+                valorPedido
+            }
+        })
      }
 };
 

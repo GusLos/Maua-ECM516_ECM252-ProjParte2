@@ -27,8 +27,14 @@ const funcoes = {
         delete pedidoAtualizado.idMesa;
         delete pedidoAtualizado.idPedido;
         const pedidos = BDconsulta[idMesaPedidoAtualizado]['pedidos'] || {};
-        pedidos[idPedidoAtualizado] = pedidoAtualizado
+        pedidos[idPedidoAtualizado] = pedidoAtualizado;
         BDconsulta[idMesaPedidoNovo]['pedidos'] = pedidos;
+    },
+    AtualizarContaMesa: (contaMesa) => {
+        BDconsulta[contaMesa.idMesa].valorConta = contaMesa.valorConta;
+    },
+    DefinirValorPedido: (valorPedido) => {
+        BDconsulta[valorPedido.idMesa]['pedidos'][valorPedido.idPedido].valorPedido = valorPedido.valorPedido;
     }
 };
 
