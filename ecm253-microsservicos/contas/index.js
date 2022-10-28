@@ -8,20 +8,24 @@ app.use(express.json());
 const BDcontas = [];
 
 const funcoes = {
-    MesaCriada: (novaMesa) => {
+    MesaAberta: (novaMesa) => {
         const novaConta = { idMesa: novaMesa.idMesa, status: novaMesa.status, valorConta: 0 };
         BDcontas.push(novaConta);
+        axios.post('http://localhost:1000/eventos', {
+            tipo: 'AtualizarContaMesa',
+            dados: novaConta
+        })
     },
-    MesaAberta: (mesaAtualizada) => {
-        const mesaParaAtualizar = BDcontas.find(m => m.idMesa === mesaAtualizada.idMesa);
-        const indiceMesaParaAtualizar = BDcontas.indexOf(mesaParaAtualizar);
-        if (indiceMesaParaAtualizar > -1){
-            BDcontas[indiceMesaParaAtualizar].status = mesaAtualizada.status
-        }
-        else {
-            console.log('Falha ao atualizar status da mesa. Mesa não encontrada.')
-        }
-    },
+    // MesaAberta: (mesaAtualizada) => {
+    //     const mesaParaAtualizar = BDcontas.find(m => m.idMesa === mesaAtualizada.idMesa);
+    //     const indiceMesaParaAtualizar = BDcontas.indexOf(mesaParaAtualizar);
+    //     if (indiceMesaParaAtualizar > -1){
+    //         BDcontas[indiceMesaParaAtualizar].status = mesaAtualizada.status
+    //     }
+    //     else {
+    //         console.log('Falha ao atualizar status da mesa. Mesa não encontrada.')
+    //     }
+    // },
     PedidoEnviado: (novoPedido) => {
         const mesa = BDcontas.find(m => m.idMesa === novoPedido.idMesa);
         const indiceMesaParaAdicionarPedido = BDcontas.indexOf(mesa);
@@ -30,10 +34,8 @@ const funcoes = {
             valorPedido += 5.00;
         }
         valorPedido += precos[novoPedido.pedido]
-        console.log(BDcontas[indiceMesaParaAdicionarPedido])
-        console.log(indiceMesaParaAdicionarPedido)
+        console.log(`Indice = ${indiceMesaParaAdicionarPedido}`)
         if (indiceMesaParaAdicionarPedido > -1){
-            console.log('ENTREI......')
             const valorAntigo = BDcontas[indiceMesaParaAdicionarPedido].valorConta 
             BDcontas[indiceMesaParaAdicionarPedido].valorConta = valorPedido + valorAntigo;
         }
@@ -54,6 +56,6 @@ app.post('/eventos', (req, res) => {
     res.status(200).send({msg: 'OK'});
 });
 
-app.listen(7000, () => {
-    console.log('Contas. Porta 7000.');
+app.listen(6000, () => {
+    console.log('Contas. Porta 6000.');
 })
