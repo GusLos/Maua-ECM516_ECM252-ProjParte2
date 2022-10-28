@@ -16,16 +16,6 @@ const funcoes = {
             dados: novaConta
         })
     },
-    // MesaAberta: (mesaAtualizada) => {
-    //     const mesaParaAtualizar = BDcontas.find(m => m.idMesa === mesaAtualizada.idMesa);
-    //     const indiceMesaParaAtualizar = BDcontas.indexOf(mesaParaAtualizar);
-    //     if (indiceMesaParaAtualizar > -1){
-    //         BDcontas[indiceMesaParaAtualizar].status = mesaAtualizada.status
-    //     }
-    //     else {
-    //         console.log('Falha ao atualizar status da mesa. Mesa não encontrada.')
-    //     }
-    // },
     PedidoEnviado: (novoPedido) => {
         const mesa = BDcontas.find(m => m.idMesa === novoPedido.idMesa);
         const indiceMesaParaAdicionarPedido = BDcontas.indexOf(mesa);
@@ -36,8 +26,16 @@ const funcoes = {
         valorPedido += precos[novoPedido.pedido]
         console.log(`Indice = ${indiceMesaParaAdicionarPedido}`)
         if (indiceMesaParaAdicionarPedido > -1){
-            const valorAntigo = BDcontas[indiceMesaParaAdicionarPedido].valorConta 
-            BDcontas[indiceMesaParaAdicionarPedido].valorConta = valorPedido + valorAntigo;
+            const valorAntigo = BDcontas[indiceMesaParaAdicionarPedido].valorConta ;
+            const valorNovo = valorPedido + valorAntigo;
+            BDcontas[indiceMesaParaAdicionarPedido].valorConta = valorNovo;
+            axios.post('http://localhost:1000/eventos', {
+                tipo: 'AtualizarContaMesa',
+                dados: {
+                    idMesa: novoPedido.idMesa,
+                    valorConta: valorNovo
+                }
+            });
         }
         else {
             console.log('Falha ao adicionar valor na conta da mesa. Mesa não encontrada.');
