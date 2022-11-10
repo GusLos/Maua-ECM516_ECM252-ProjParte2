@@ -17,14 +17,18 @@ const cabecalho = () => {
 
 const corpo =() => {
     return(
-        <div className="container"><h1 className="text-center">15</h1></div>
+        <div className="container"><h1 className="text-center">Café A</h1></div>
     )
 }
 
 const rodape = () => {
     return(
-        <div>
-            <Feedback textoOK="Finalizar pedido" textoNOK="Cancelar pedido"></Feedback>
+        <div className="container">
+            <div className="row justify-content-md-center">
+                <div className="col-md-auto">
+                    <button type="button" className="btn btn-large btn-primary">Detalhes da mesa</button>
+                </div>
+            </div>
         </div>
     )
 }
@@ -40,10 +44,18 @@ export class PaginaMesas extends React.Component{
                 <h1>Mesas</h1>
             </div>
         </div>
-        <div className="row row-cols-2 px-4">
+        <div className="row row-cols-3 g-3">
             <div className="col">
-
-                <Cartao cabecalho={cabecalho()}>{corpo()}</Cartao>
+                <Cartao cabecalho={cabecalho()} rodape={rodape()}>{corpo()}</Cartao>
+            </div>
+            <div className="col">
+                <Cartao cabecalho={cabecalho()} rodape={rodape()}>{corpo()}</Cartao>
+            </div>
+            <div className="col">
+                <Cartao cabecalho={cabecalho()} rodape={rodape()}>{corpo()}</Cartao>
+            </div>
+            <div className="col">
+                <Cartao cabecalho={cabecalho()} rodape={rodape()}>{corpo()}</Cartao>
             </div>
         </div>
       </div>
