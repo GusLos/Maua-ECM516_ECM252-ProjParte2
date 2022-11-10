@@ -22,7 +22,7 @@ export class Cartao extends React.Component {
 
                 </div>
 
-                <div className="crad-body mg-2">{this.props.children}</div>
+                <div className="card-body mg-2 p-0 h-1500">{this.props.children}</div>
 
 
                 <div className="card-footer text-muted text-center">{this.props.rodape}</div>

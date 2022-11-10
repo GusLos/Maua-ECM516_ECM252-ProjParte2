@@ -4,24 +4,36 @@ import Pedido from './Pedido'
 import {Cartao} from './Cartao';
 import Feedback from './Feedback';
 
+const cabecalho = (numeroMesa, tempo) => {
+    return(
+        <div className="container">
+            <div className="row row-cols-2">
+                <div className="col"><h6>Mesa: {numeroMesa}</h6></div>
+                <div className="col"><h6>Tempo corrido: {tempo}</h6></div>
+            </div>
+        </div>
+    )
+} ;
+
+const corpo = (pedido, acompanhamento) => {
+    return(
+        <div className="container">
+            <div className="row row-cols-2">
+                <div className="col"><h4 className="text-center">{pedido}</h4></div>
+                <div className="col bg-warning"><h4 className="text-center">{acompanhamento}</h4></div>
+            </div>
+        </div>
+    )
+};
+
 const rodape = () => {
     return(
         <div>
             <Feedback textoOK="Finalizar pedido" textoNOK="Cancelar pedido"></Feedback>
         </div>
     )
-}
+};
 
-const cabecalho = () => {} //Lembra, cartão agora precisa de cabeçalho, rodapé e o corpo
-
-//                     <div className="row row-cols-2">
-//                         <div className="col">
-//                             <h6>Mesa: {this.props.mesa}</h6>
-//                         </div>
-//                         <div className="col">
-//                             <h6>Pedido: {this.props.tempo}</h6>
-//                         </div>
-//                     </div>
 
 
 export class PaginaPedidos extends React.Component{
@@ -36,12 +48,14 @@ export class PaginaPedidos extends React.Component{
             <h1>Pedidos</h1>
 
 
-            <Cartao mesa='12' rodape={rodape()} tempo='1:55'>                   { /* Cartão não funciona mais assim, TROCAR/CONSERTAR */ }
-                <Pedido prato="File" acompanhamento="arroz batata"></Pedido>
+            <Cartao cabecalho={cabecalho('13', '12:35')} rodape={rodape()} >
+                {corpo('File', 'arroz - feijão - batata - legumes')}
+                {/* <Pedido prato="File" acompanhamento="arroz batata"></Pedido> */}
             </Cartao>
 
-            <Cartao mesa='15' rodape={rodape()} tempo='4:55'>
-                <Pedido prato="Frango" ></Pedido>
+            <Cartao cabecalho={cabecalho('15', '13:05')} rodape={rodape()}>
+                {corpo('Peixe ao molho camarão', 'arroz - feijão - batata - legumes')}
+                {/* <Pedido prato="Frango" ></Pedido> */}
             </Cartao>
 
           </div>
