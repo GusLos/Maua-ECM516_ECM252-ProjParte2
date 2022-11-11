@@ -11,30 +11,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Pedido from './Pedido'
-import {Cartao} from './Cartao';
-import Feedback from './Feedback';
 import { MenuSuperior } from './MenuSuperior';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { PaginaPedidos } from './PaginaPedidos';
+import { PaginaMesas } from './PaginaMesas';
 
 
 
-const RotaPedidos = () => {
 
-  return(
-    <div>Deveria ver pedidos</div>
-  )
-};
-const RotaMesas = () => {
-
-  return(
-    <div>Deveria ver mesas</div>
-  )
-};
 const pagina1 = () => {
-
-
-
   return(
     <div>Deveria ver menu</div>
   )
@@ -93,9 +78,9 @@ class App extends React.Component{
     return(
       <BrowserRouter>
         <Route path='/' component={MenuSuperior}></Route>
-        <Route path='/' component={pagina1}></Route>
-        <Route path='/Pedidos' component={RotaPedidos}></Route>
-        <Route path='/Mesas' component={RotaMesas}></Route>
+        <Route path='/' exact component={pagina1}></Route>
+        <Route path='/Pedidos' component={PaginaPedidos}></Route>
+        <Route path='/Mesas' component={PaginaMesas}></Route>
       </BrowserRouter>
     )
   }
