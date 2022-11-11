@@ -12,7 +12,7 @@ export class Cartao extends React.Component {
                             <h6>Mesa: {this.props.mesa}</h6>
                         </div>
                         <div className="col">
-                            <h6>Pedido: {this.props.tempo}</h6>
+                            <h6>Tempo corrido: {this.props.tempo}</h6>
                         </div>
                     </div>
 
