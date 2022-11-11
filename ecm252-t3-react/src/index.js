@@ -4,10 +4,6 @@
 // https://axios-http.com/docs/example
 
 
-
-
-
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -15,8 +11,6 @@ import { MenuSuperior } from './MenuSuperior';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { PaginaPedidos } from './PaginaPedidos';
 import { PaginaMesas } from './PaginaMesas';
-
-
 
 
 const pagina1 = () => {
@@ -39,40 +33,6 @@ class App extends React.Component{
   //   }
   // }
 
-  // constructor(props){
-  //   super(props);
-  //   this.state = {paginaAtual:'menu'}
-  // }
-
-
-
-
-  // render(){
-  //   return(
-  //     <div className="container mt-2">
-  //       {/* <div>
-
-  //         <BrowserRouter>
-  //           <Route path='/' component={Menu}></Route>
-  //           <Route path='/Pedidos' component={Pedidos}></Route>
-  //           <Route path='/Mesas' component={Mesas}></Route>
-  //         </BrowserRouter>
-  //       </div> */}
-  //       {/* uma linha, conteúdo centralizado, display é flex */}
-  //       <div className="row justify-content-center">
-  //         {/* oito colunas das doze disponíveis serão usadas para telas médias em diante */}
-  //         <div className="col-md-8">
-  //           <h1>Pedidos</h1>
-  //           <Cartao mesa='12' nomeCliente='andre' tempo='1:55'>
-  //             <Pedido prato="File" acompanhamento="Arroz, feijão, salada, batata"></Pedido>
-  //           </Cartao>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   )
-  // }
-
-
 
   render() {
     return(
@@ -84,16 +44,9 @@ class App extends React.Component{
       </BrowserRouter>
     )
   }
-
-
 }
 
-
-
-
 ReactDOM.render(
-
   <App />,
-
   document.querySelector("#root")
 )
