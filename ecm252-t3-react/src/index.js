@@ -4,13 +4,13 @@
 // https://axios-http.com/docs/example
 
 
-import React from 'react';
+import React , { useState } from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { MenuSuperior } from './MenuSuperior';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, useLocation, Link } from 'react-router-dom';
 import { PaginaPedidos } from './PaginaPedidos';
 import { PaginaMesas } from './PaginaMesas';
+import MenuSuperior from './MenuSuperior';
 
 
 const pagina1 = () => {
@@ -19,20 +19,42 @@ const pagina1 = () => {
   )
 };
 
+const Home = (props) => {
+  Example();
+  return (
+    <>
+      <h1>Home</h1>
+      <hr />
+      <p style={{ marginTop: '150vh' }}>
+        <Link to="/contact">Go to contact page</Link>
+      </p>
+    </>
+  );
+};
+
+const Example = props => {
+  const location = useLocation();
+  console.log(location.pathname);
+}
+
+const Contact = (props) => {
+  Example();
+  return (
+    <>
+      <h1>Contact</h1>
+      <hr />
+      <p style={{ marginTop: '150vh' }}>
+        <Link to="/">Go to homepage</Link>
+      </p>
+    </>
+  );
+};
+
+
+
+
 
 class App extends React.Component{
-
-  // constructor(props){
-  //   super(props)
-  //   this.state = {
-  //     latitude: null,
-  //     longitude: null,
-  //     estacao: null,
-  //     data: null,
-  //     icone: null
-  //   }
-  // }
-
 
   render() {
     return(
