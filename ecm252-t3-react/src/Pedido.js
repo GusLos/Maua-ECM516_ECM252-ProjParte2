@@ -1,9 +1,7 @@
 import React from 'react'
-import { ReactDOM } from 'react-dom'
 
 const Pedido = ({prato, acompanhamento}) => {
     return (
-
         <div className="d-flex">
             <div className="d-flex align-items-center">
                 <i></i>
@@ -13,7 +11,7 @@ const Pedido = ({prato, acompanhamento}) => {
                 <p className="text-center">{acompanhamento}</p>
             </div>
         </div>
-
     )
 }
+
 export default Pedido;

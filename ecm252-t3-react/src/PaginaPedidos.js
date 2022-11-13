@@ -1,6 +1,5 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Pedido from './Pedido'
 import {Cartao} from './Cartao';
 import Feedback from './Feedback';
 
@@ -34,10 +33,7 @@ const rodape = () => {
     )
 };
 
-
-
 export class PaginaPedidos extends React.Component{
-
   render(){
     return(
       <div className="container mt-2">
@@ -46,8 +42,7 @@ export class PaginaPedidos extends React.Component{
           {/* oito colunas das doze disponíveis serão usadas para telas médias em diante */}
           <div className="vstack gap-3 col-md-8">
             <h1>Pedidos</h1>
-
-
+            
             <Cartao cabecalho={cabecalho('13', '12:35')} rodape={rodape()} >
                 {corpo('File', 'arroz - feijão - batata - legumes')}
                 {/* <Pedido prato="File" acompanhamento="arroz batata"></Pedido> */}
@@ -57,14 +52,8 @@ export class PaginaPedidos extends React.Component{
                 {corpo('Peixe ao molho camarão', 'arroz - feijão - batata - legumes')}
                 {/* <Pedido prato="Frango" ></Pedido> */}
             </Cartao>
-
+            
           </div>
-
-
-
-
-
-
         </div>
       </div>
     )
