@@ -1,23 +1,21 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Pedido from './Pedido'
 import {Cartao} from './Cartao';
-import Feedback from './Feedback';
 
-const cabecalho = () => {
+const cabecalho = (statusMesa, horaChegada) => {
     return(
         <div className="container">
             <div className="row row-cols-2">
-                <div className="col"><p className="m-1">Status: Aberta</p></div>
-                <div className="col"><p className="m-1">Chegada: 12:30</p></div>
+                <div className="col"><p className="m-1">Status: {statusMesa}</p></div>
+                <div className="col"><p className="m-1">Chegada: {horaChegada}</p></div>
             </div>
         </div>
     ) 
 }
 
-const corpo =() => {
+const corpo =(idMesa) => {
     return(
-        <div className="container"><h1 className="text-center">Café A</h1></div>
+        <div className="container"><h1 className="text-center">{idMesa}</h1></div>
     )
 }
 
@@ -46,16 +44,16 @@ export class PaginaMesas extends React.Component{
         </div>
         <div className="row row-cols-3 g-3">
             <div className="col">
-                <Cartao cabecalho={cabecalho()} rodape={rodape()}>{corpo()}</Cartao>
+                <Cartao cabecalho={cabecalho('aberta', '12:30')} rodape={rodape()}>{corpo('15')}</Cartao>
             </div>
             <div className="col">
-                <Cartao cabecalho={cabecalho()} rodape={rodape()}>{corpo()}</Cartao>
+                <Cartao cabecalho={cabecalho('aberta', '13:15')} rodape={rodape()}>{corpo('2')}</Cartao>
             </div>
             <div className="col">
-                <Cartao cabecalho={cabecalho()} rodape={rodape()}>{corpo()}</Cartao>
+                <Cartao cabecalho={cabecalho('aberta', '12:45')} rodape={rodape()}>{corpo('Café A')}</Cartao>
             </div>
             <div className="col">
-                <Cartao cabecalho={cabecalho()} rodape={rodape()}>{corpo()}</Cartao>
+                <Cartao cabecalho={cabecalho('fechada', '11:30')} rodape={rodape()}>{corpo('22')}</Cartao>
             </div>
         </div>
       </div>
