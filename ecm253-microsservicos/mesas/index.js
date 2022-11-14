@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
 const axios = require('axios');
+const cors = require('cors');
 const { v4: uuidv4 } = require('uuid')
 const statusTipo = require('../../models/tipos-status.json');
 app.use(express.json());
+app.use(cors())
 
 const BDmesas = [];
 

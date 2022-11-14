@@ -1,6 +1,22 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Cartao} from './Cartao';
+import axios from 'axios';
+
+// const getMesas = async () => {
+//     try{
+//         const resposta = await axios.get(`http://localhost:2000/mesas`);
+//         const listaMesas = resposta.data
+//         console.log(listaMesas)
+//         // listaMesas.map((elemento, indice) => {
+//         //     console.log(`elemento ${elemento}, indice ${indice}`)
+//         // })
+        
+//     }
+//     catch (errors) {
+//         console.log(errors)
+//     }
+// }
 
 const cabecalho = (statusMesa, horaChegada) => {
     return(
@@ -31,8 +47,29 @@ const rodape = () => {
     )
 }
 
-
 export class PaginaMesas extends React.Component{
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            mesas : []
+        }
+    }
+    
+    getMesas = async () => {
+        const resposta = await axios.get(`http://localhost:2000/mesas`)
+        this.setState({mesas: resposta.data})
+        // console.log(this.state.mesas)
+        
+    }
+
+    componentDidMount(){
+        this.getMesas();
+    }
+
+    mostrarMesas = (listaMesas) => {
+        return listaMesas
+    }
 
   render(){
     return(
@@ -42,8 +79,15 @@ export class PaginaMesas extends React.Component{
                 <h1>Mesas</h1>
             </div>
         </div>
-        <div className="row row-cols-3 g-3">
-            <div className="col">
+        <div className="row row-cols-2 g-3">
+
+            {this.state.mesas.map((elemento, indice) => (
+                <div className="col">
+                    <Cartao cabecalho={cabecalho(elemento.status, elemento.horaChegada)} rodape={rodape()} key={indice} >{corpo(elemento.mesa)}</Cartao>
+                </div>
+            ))}
+
+            {/* <div className="col">
                 <Cartao cabecalho={cabecalho('aberta', '12:30')} rodape={rodape()}>{corpo('15')}</Cartao>
             </div>
             <div className="col">
@@ -54,7 +98,7 @@ export class PaginaMesas extends React.Component{
             </div>
             <div className="col">
                 <Cartao cabecalho={cabecalho('fechada', '11:30')} rodape={rodape()}>{corpo('22')}</Cartao>
-            </div>
+            </div> */}
         </div>
       </div>
     )
