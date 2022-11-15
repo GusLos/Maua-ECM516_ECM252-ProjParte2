@@ -2,6 +2,7 @@
 // https://getbootstrap.com/docs/5.2/components/card/
 // https://reactjs.org/docs/forms.html#controlled-components
 // https://axios-http.com/docs/example
+// https://www.cluemediator.com/url-parameters-with-react-router#:~:text=URL%20Parameters%20with%20React%20Router%201%201.%20Why,URL%20Parameters%20with%20Example%20...%204%204.%20Output
 
 
 import React , { useState } from 'react';
@@ -11,48 +12,13 @@ import { BrowserRouter, Route, useLocation, Link } from 'react-router-dom';
 import { PaginaPedidos } from './PaginaPedidos';
 import { PaginaMesas } from './PaginaMesas';
 import MenuSuperior from './MenuSuperior';
-
+import PaginaMesa from './PaginaMesa';
 
 const pagina1 = () => {
   return(
     <div>Deveria ver menu</div>
   )
 };
-
-const Home = (props) => {
-  Example();
-  return (
-    <>
-      <h1>Home</h1>
-      <hr />
-      <p style={{ marginTop: '150vh' }}>
-        <Link to="/contact">Go to contact page</Link>
-      </p>
-    </>
-  );
-};
-
-const Example = props => {
-  const location = useLocation();
-  console.log(location.pathname);
-}
-
-const Contact = (props) => {
-  Example();
-  return (
-    <>
-      <h1>Contact</h1>
-      <hr />
-      <p style={{ marginTop: '150vh' }}>
-        <Link to="/">Go to homepage</Link>
-      </p>
-    </>
-  );
-};
-
-
-
-
 
 class App extends React.Component{
 
@@ -61,8 +27,9 @@ class App extends React.Component{
       <BrowserRouter>
         <Route path='/' component={MenuSuperior}></Route>
         <Route path='/' exact component={pagina1}></Route>
-        <Route path='/Pedidos' component={PaginaPedidos}></Route>
-        <Route path='/Mesas' component={PaginaMesas}></Route>
+        <Route path='/pedidos' component={PaginaPedidos}></Route>
+        <Route exact path='/mesas' component={PaginaMesas}></Route>
+        <Route path='/Mesas/Mesa/:idmesa' component={PaginaMesa}></Route>
       </BrowserRouter>
     )
   }
