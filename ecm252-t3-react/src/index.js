@@ -29,7 +29,7 @@ class App extends React.Component{
         <Route path='/' exact component={pagina1}></Route>
         <Route path='/pedidos' component={PaginaPedidos}></Route>
         <Route exact path='/mesas' component={PaginaMesas}></Route>
-        <Route path='/Mesas/Mesa/:idmesa' component={PaginaMesa}></Route>
+        <Route path='/mesas/mesa/:idmesa' component={PaginaMesa}></Route>
       </BrowserRouter>
     )
   }
