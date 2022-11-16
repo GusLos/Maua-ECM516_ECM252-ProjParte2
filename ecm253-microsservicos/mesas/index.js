@@ -44,7 +44,7 @@ app.post('/mesas', async (req, res) => {
         tipo: 'MesaCriada',
         dados:  novaMesa
     });
-    res.status(200).send({msg: 'Ok'});
+    res.status(200).send({msg: 'Ok', idMesa});
 });
 
 app.post('/eventos', (req, res) => {

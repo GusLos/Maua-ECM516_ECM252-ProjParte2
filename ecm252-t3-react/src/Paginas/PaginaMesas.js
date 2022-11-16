@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Cartao } from './Cartao';
+import { Cartao } from '../Cartao';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
 
@@ -17,7 +17,6 @@ export class PaginaMesas extends React.Component {
         const resposta = await axios.get(`http://localhost:2000/mesas`)
         this.setState({ mesas: resposta.data })
         // console.log(this.state.mesas)
-
     }
 
     cabecalho = (statusMesa, horaChegada) => {
@@ -65,12 +64,16 @@ export class PaginaMesas extends React.Component {
     render() {
         return (
             <div className="container">
-                <div className="row">
+                {/* <div className="row">
                     <div className="col">
                         <h1>Mesas</h1>
                     </div>
-                </div>
-                <div className="row row-cols-2 g-3">
+                </div> */}
+                <div className="row row-cols-2 g-3 m-2">
+                    <div className="col"><h1>Mesa</h1></div>
+                    <div className="col text-center">
+                    <Link className='btn btn-large btn-outline-warning text-muted' to={`/mesas/adicionar`} >Abrir mesa</Link>
+                    </div>
                     {this.mostrarMesas()}
                 </div>
             </div>

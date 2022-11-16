@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Cartao} from './Cartao';
-import Feedback from './Feedback';
+import {Cartao} from '../Cartao';
+import Feedback from '../Feedback';
 
 const cabecalho = (numeroMesa, tempo) => {
     return(

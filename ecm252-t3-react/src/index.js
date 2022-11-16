@@ -9,10 +9,12 @@ import React , { useState } from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter, Route, useLocation, Link } from 'react-router-dom';
-import { PaginaPedidos } from './PaginaPedidos';
-import { PaginaMesas } from './PaginaMesas';
+import { PaginaPedidos } from './Paginas/PaginaPedidos';
+import { PaginaMesas } from './Paginas/PaginaMesas';
+import { PaginaAdicionarMesa } from './Paginas/PaginaAdicionarMesa';
+import PaginaMesa from './Paginas/PaginaMesa'
 import MenuSuperior from './MenuSuperior';
-import PaginaMesa from './PaginaMesa';
+
 
 const pagina1 = () => {
   return(
@@ -30,6 +32,7 @@ class App extends React.Component{
         <Route path='/pedidos' component={PaginaPedidos}></Route>
         <Route exact path='/mesas' component={PaginaMesas}></Route>
         <Route path='/mesas/mesa/:idmesa' component={PaginaMesa}></Route>
+        <Route path='/mesas/adicionar' component={PaginaAdicionarMesa}></Route>
       </BrowserRouter>
     )
   }
