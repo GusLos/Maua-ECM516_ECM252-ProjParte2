@@ -35,6 +35,15 @@ const funcoes = {
     },
     DefinirValorPedido: (valorPedido) => {
         BDconsulta[valorPedido.idMesa]['pedidos'][valorPedido.idPedido].valorPedido = valorPedido.valorPedido;
+    },
+    PedidoCanceladoConfirmado: (pedidoCancelado) => {
+        delete BDconsulta[pedidoCancelado.idMesa]['pedidos'][pedidoCancelado.idPedido]
+    },
+    PedidoProntoConfirmado: (pedido) => {
+        BDconsulta[pedido.idMesa]['pedidos'][pedido.idPedido].status = pedido.status;
+    },
+    MesaFechadaConfirmada: (mesaFechada) => {
+        BDconsulta[mesaFechada.idMesa].status = mesaFechada.status;
     }
 };
 

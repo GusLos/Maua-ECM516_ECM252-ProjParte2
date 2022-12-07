@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
 const axios = require('axios');
+const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
-// const tipo = require('../../models/tipos-pedido.json');
 const status = require('../../models/tipos-status.json');
 app.use(express.json());
+app.use(cors());
 
 const BDpedidos = [];
 
@@ -20,15 +21,34 @@ const funcoes = {
         }
         axios.post('http://localhost:1000/eventos', {
             tipo: 'PedidoAtualizado',
-            dados: {
-                idMesa: pedido.idMesa,
-                idPedido: pedido.idPedido,
-                prato: pedido.prato,
-                montagem: pedido.montagem,
-                acompanhamentos: pedido.acompanhamentos,
-                status: pedido.status
-            }
+            dados: pedido
         })
+    },
+    PedidoCanceladoAtualizado: async (pedidoCancelado) => {
+        const quantidadeDePedidos = BDpedidos.length;
+        for (let i = 0; i < quantidadeDePedidos; i++){
+            const pedido = BDpedidos.shift();
+            if (pedido.idPedido !== pedidoCancelado.idPedido){
+                BDpedidos.push(pedido)
+            }
+        }
+        await axios.post('http://localhost:1000/eventos', {
+            tipo: 'PedidoCanceladoConfirmado',
+            dados: pedidoCancelado
+        });
+    },
+    PedidoProntoAtualizado: async (pedidoPronto) => {
+        const quantidadeDePedidos = BDpedidos.length;
+        for (let i = 0; i < quantidadeDePedidos; i++){
+            const pedido = BDpedidos.shift();
+            if (pedido.idPedido !== pedidoPronto.idPedido){
+                BDpedidos.push(pedido);
+            }
+        }
+        await axios.post('http://localhost:1000/eventos', {
+            tipo: 'PedidoProntoConfirmado',
+            dados: pedidoPronto
+        });
     }
 }
 
@@ -54,6 +74,24 @@ app.post('/mesas/:idMesa/pedidos', async (req, res) => {
     // res.status(201).send(pedidosDaMesa);
     res.status(200).send({msg: 'OK'})
 });
+
+app.put('/pedido', async (req, res) => {
+    const pedidoParaAtualizar = BDpedidos.find(p => p.idPedido === req.body.idPedido);
+    await axios.post('http://localhost:1000/eventos', {
+        tipo: definirAcaoPedido(req.body.acao),
+        dados: pedidoParaAtualizar
+    })
+    res.status(200).send({pedidoParaAtualizar})
+})
+
+const definirAcaoPedido = (acao) => {
+    if(acao.toLowerCase() === 'cancelar'){
+        return 'PedidoCancelado'
+    }
+    if(acao.toLowerCase() === 'pronto'){
+        return 'PedidoPronto'
+    }
+}
 
 app.post('/eventos', (req, res) => {
     try {

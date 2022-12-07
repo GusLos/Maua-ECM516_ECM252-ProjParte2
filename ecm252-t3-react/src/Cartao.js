@@ -7,22 +7,25 @@ export class Cartao extends React.Component {
                 <div className="card-header text-center">
 
 
-                    <div className="row row-cols-2">
+
+                    {this.props.cabecalho}
+
+                    {/* <div className="row row-cols-2">
                         <div className="col">
                             <h6>Mesa: {this.props.mesa}</h6>
                         </div>
                         <div className="col">
-                            <h6>Pedido: {this.props.tempo}</h6>
+                            <h6>Tempo corrido: {this.props.tempo}</h6>
                         </div>
-                    </div>
+                    </div> */}
 
 
                 </div>
 
-                <div className="crad-body mg-2">{this.props.children}</div>
+                <div className="card-body mg-2 p-0 h-1500">{this.props.children}</div>
 
 
-                <div className="card-footer text-muted text-center">{this.props.nomeCliente}</div>
+                <div className="card-footer text-muted text-center">{this.props.rodape}</div>
 
             </div>
         )
