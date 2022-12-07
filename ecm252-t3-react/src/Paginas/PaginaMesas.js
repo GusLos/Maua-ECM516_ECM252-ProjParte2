@@ -55,8 +55,8 @@ export class PaginaMesas extends React.Component {
 
     mostrarMesas = () => {
         return this.state.mesas.map((elemento, indice) => (
-            <div className="col">
-                <Cartao cabecalho={this.cabecalho(elemento.status, elemento.horaChegada)} rodape={this.rodape(elemento.idMesa)} key={indice} >{this.corpo(elemento.mesa)}</Cartao>
+            <div key={indice} className="col">
+                <Cartao cabecalho={this.cabecalho(elemento.status, elemento.horaChegada)} rodape={this.rodape(elemento.idMesa)} >{this.corpo(elemento.mesa)}</Cartao>
             </div>
         ))
     }

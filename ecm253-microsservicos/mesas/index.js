@@ -19,6 +19,19 @@ const funcoes = {
         else{
             console.log('Falha ao atualizar mesa. Mesa não existe.');
         }
+    },
+    MesaFechada: async (mesaFechada) => {
+        const quantidadeMesas = BDmesas.length
+        for (let i = 0; i < quantidadeMesas; i++){
+            const mesa = BDmesas.shift()
+            if(mesa.idMesa !== mesaFechada.idMesa){
+                BDmesas.push(mesa)
+            }
+        }
+        await axios.post('http://localhost:1000/eventos', {
+            tipo: 'MesaFechadaConfirmada',
+            dados: mesaFechada
+        });
     }
 }
 
@@ -34,6 +47,7 @@ app.get('/mesas', (req, res) => {
 
 app.post('/mesas', async (req, res) => {
     const idMesa = uuidv4();
+    // console.log(req.body['mesa'])
     const mesa = formatString(req.body['mesa']);
     const date = new Date();
     const horaChegada = date.toLocaleTimeString();
@@ -45,6 +59,17 @@ app.post('/mesas', async (req, res) => {
         dados:  novaMesa
     });
     res.status(200).send({msg: 'Ok', idMesa});
+});
+
+app.put('/mesas', async (req, res) => {
+    const mesaAtualizar = BDmesas.find((mesa) => {return mesa.idMesa === req.body.idMesa})
+    // const acao = req.body.acao
+    await axios.post('http://localhost:1000/eventos', {
+        tipo: 'MesaFechando',
+        dados: mesaAtualizar
+    });
+    // console.log(mesaAtualizar);
+    res.status(200).send(mesaAtualizar)
 });
 
 app.post('/eventos', (req, res) => {

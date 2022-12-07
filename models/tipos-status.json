@@ -3,6 +3,8 @@
     "ENVIANDO_COPA": "Enviando para copa...",
     "NA_COZINHA": "Na cozinha, preparando o prato...",
     "NA_COPA": "Na copa, preparando a bebida...",
+    "PRONTO": "Pedido está pronto.",
+    "CANCELADO": "Pedido foi cancelado.",
     "ABRINDO_MESA": "Abrindo mesa...",
     "MESA_ABERTA": "Aberta.",
     "MESA_FECHADA": "Fechada."

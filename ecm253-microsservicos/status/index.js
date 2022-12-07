@@ -12,10 +12,31 @@ const funcoes = {
             dados: pedido
         });
     },
+    PedidoCancelado: (pedido) => {
+        pedido.status = status.CANCELADO;
+        axios.post('http://localhost:1000/eventos', {
+            tipo: 'PedidoCanceladoAtualizado',
+            dados: pedido
+        })
+    },
+    PedidoPronto: (pedido) => {
+        pedido.status = status.PRONTO;
+        axios.post('http://localhost:1000/eventos', {
+            tipo: 'PedidoProntoAtualizado',
+            dados: pedido
+        })
+    },
     MesaCriada: (mesa) => {
         mesa.status = status.MESA_ABERTA;
         axios.post('http://localhost:1000/eventos', {
             tipo: 'MesaAberta',
+            dados: mesa
+        })
+    },
+    MesaFechando: (mesa) => {
+        mesa.status = status.MESA_FECHADA;
+        axios.post('http://localhost:1000/eventos', {
+            tipo: 'MesaFechada',
             dados: mesa
         })
     }

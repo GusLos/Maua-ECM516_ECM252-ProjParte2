@@ -14,6 +14,7 @@ import { PaginaMesas } from './Paginas/PaginaMesas';
 import { PaginaAdicionarMesa } from './Paginas/PaginaAdicionarMesa';
 import PaginaMesa from './Paginas/PaginaMesa'
 import MenuSuperior from './MenuSuperior';
+import PaginaAdicionarPedido from './Paginas/PaginaAdicionarPedido'
 
 
 const pagina1 = () => {
@@ -28,11 +29,12 @@ class App extends React.Component{
     return(
       <BrowserRouter>
         <Route path='/' component={MenuSuperior}></Route>
-        <Route path='/' exact component={pagina1}></Route>
-        <Route path='/pedidos' component={PaginaPedidos}></Route>
+        <Route exact path='/' component={pagina1}></Route>
+        <Route exact path='/pedidos' component={PaginaPedidos}></Route>
         <Route exact path='/mesas' component={PaginaMesas}></Route>
-        <Route path='/mesas/mesa/:idmesa' component={PaginaMesa}></Route>
-        <Route path='/mesas/adicionar' component={PaginaAdicionarMesa}></Route>
+        <Route exact path='/mesas/mesa/:idmesa' component={PaginaMesa}></Route>
+        <Route exact path='/mesas/adicionar' component={PaginaAdicionarMesa}></Route>
+        <Route exact path='/mesas/:idmesa/pedidos' component={PaginaAdicionarPedido}></Route>
       </BrowserRouter>
     )
   }
