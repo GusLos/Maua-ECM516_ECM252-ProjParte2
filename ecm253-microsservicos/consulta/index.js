@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const axios = require('axios');
+const cors = require('cors');
 app.use(express.json());
+app.use(cors())
 
 const BDconsulta = {};
 
@@ -49,6 +51,10 @@ const funcoes = {
 
 app.get('/mesas', (req, res) => {
     res.status(200).send(BDconsulta);
+});
+
+app.get('/mesas/:idMesa', (req, res) => {
+    res.status(200).send(BDconsulta[req.params.idMesa]);
 });
 
 app.post('/eventos', (req, res) => {
