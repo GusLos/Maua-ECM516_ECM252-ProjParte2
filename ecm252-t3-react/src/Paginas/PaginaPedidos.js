@@ -42,7 +42,7 @@ export class PaginaPedidos extends React.Component {
 
     mostrarPedidos = (pedido, indice) => {
         return (
-            <Cartao key={indice} cabecalho={this.cabecalhoPedido(pedido)} rodape={this.rodapePedido()} > {this.corpoPedido(pedido)} </Cartao>
+            <Cartao key={indice} cabecalho={this.cabecalhoPedido(pedido)} rodape={this.rodapePedido(pedido)} > {this.corpoPedido(pedido)} </Cartao>
         )
     }
 
@@ -69,12 +69,38 @@ export class PaginaPedidos extends React.Component {
         )
     }
 
-    rodapePedido = () => {
+    rodapePedido = (pedido) => {
         return(
+            // <div className="container">
+            //     <Feedback textoOK="Finalizar pedido" textoNOK="Cancelar pedido" funcaoOK={this.pedidoPronto(pedido)} ></Feedback>
+            // </div>
             <div className="container">
-                <Feedback textoOK="Finalizar pedido" textoNOK="Cancelar pedido"></Feedback>
+                <div className="row text-center">
+                    <div className="col">
+                        <button type="button" className="btn btn-primary" onClick={() => this.pedidoPronto(pedido)}>Pronto</button>
+                    </div>
+                    <div className="col">
+                        <button type="button" className="btn btn-danger" onClick={() => this.pedidoCancelado(pedido)}>Cancelar</button>
+                    </div>
+                </div>
             </div>
         )
+    }
+
+    pedidoPronto = async (pedido) => {
+        await axios.put(`http://localhost:3000/pedido`, {
+            acao: 'pronto',
+            idPedido:  pedido.idPedido
+        })
+        console.log('Pedido está pronto.')
+    }
+
+    pedidoCancelado = async (pedido) => {
+        await axios.put(`http://localhost:3000/pedido`, {
+            acao: 'cancelar',
+            idPedido:  pedido.idPedido
+        })
+        console.log('Pedido foi cancelado.')
     }
 
     calcularTempoCorrido = (pedido) => {
@@ -105,6 +131,7 @@ export class PaginaPedidos extends React.Component {
         this.buscarMesas();
         this.timer = setInterval(() => {
             this.setState({hora: new Date().toLocaleTimeString()})
+            this.buscarPedidos();
         }, 1000)
     }
 

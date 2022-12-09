@@ -39,10 +39,11 @@ const funcoes = {
         BDconsulta[valorPedido.idMesa]['pedidos'][valorPedido.idPedido].valorPedido = valorPedido.valorPedido;
     },
     PedidoCanceladoConfirmado: (pedidoCancelado) => {
-        delete BDconsulta[pedidoCancelado.idMesa]['pedidos'][pedidoCancelado.idPedido]
+        // delete BDconsulta[pedidoCancelado.idMesa]['pedidos'][pedidoCancelado.idPedido]
+        BDconsulta[pedidoCancelado.idMesa]['pedidos'][pedidoCancelado.idPedido].status = pedidoCancelado.status;
     },
-    PedidoProntoConfirmado: (pedido) => {
-        BDconsulta[pedido.idMesa]['pedidos'][pedido.idPedido].status = pedido.status;
+    PedidoProntoConfirmado: (pedidoPronto) => {
+        BDconsulta[pedidoPronto.idMesa]['pedidos'][pedidoPronto.idPedido].status = pedidoPronto.status;
     },
     MesaFechadaConfirmada: (mesaFechada) => {
         BDconsulta[mesaFechada.idMesa].status = mesaFechada.status;
