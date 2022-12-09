@@ -8,6 +8,7 @@ const funcoes = {
     PedidoCriado: (pedido) => {
         pedido.status = status.NA_COZINHA;
         axios.post('http://localhost:1000/eventos', {
+        // axios.post('http://barramento-de-eventos-service:1000/eventos', 
             tipo: 'PedidoEnviado',
             dados: pedido
         });
@@ -15,6 +16,7 @@ const funcoes = {
     PedidoCancelado: (pedido) => {
         pedido.status = status.CANCELADO;
         axios.post('http://localhost:1000/eventos', {
+        // axios.post('http://barramento-de-eventos-service:1000/eventos', 
             tipo: 'PedidoCanceladoAtualizado',
             dados: pedido
         })
@@ -22,6 +24,7 @@ const funcoes = {
     PedidoPronto: (pedido) => {
         pedido.status = status.PRONTO;
         axios.post('http://localhost:1000/eventos', {
+        // axios.post('http://barramento-de-eventos-service:1000/eventos', 
             tipo: 'PedidoProntoAtualizado',
             dados: pedido
         })
@@ -29,6 +32,7 @@ const funcoes = {
     MesaCriada: (mesa) => {
         mesa.status = status.MESA_ABERTA;
         axios.post('http://localhost:1000/eventos', {
+        // axios.post('http://barramento-de-eventos-service:1000/eventos', 
             tipo: 'MesaAberta',
             dados: mesa
         })
@@ -36,6 +40,7 @@ const funcoes = {
     MesaFechando: (mesa) => {
         mesa.status = status.MESA_FECHADA;
         axios.post('http://localhost:1000/eventos', {
+        // axios.post('http://barramento-de-eventos-service:1000/eventos', 
             tipo: 'MesaFechada',
             dados: mesa
         })

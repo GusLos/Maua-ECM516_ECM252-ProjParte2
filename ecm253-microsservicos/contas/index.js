@@ -14,6 +14,7 @@ const funcoes = {
         const novaConta = { idMesa: novaMesa.idMesa, status: novaMesa.status, valorConta: 0 };
         BDcontas.push(novaConta);
         axios.post('http://localhost:1000/eventos', {
+        // axios.post('http://barramento-de-eventos-service:1000/eventos', {
             tipo: 'AtualizarContaMesa',
             dados: novaConta
         })
@@ -26,12 +27,12 @@ const funcoes = {
             valorPedido += 5.00;
         }
         valorPedido += precos[novoPedido.pedido];
-        // console.log(`Indice = ${indiceMesaParaAdicionarPedido}`)
         if (indiceMesaParaAdicionarPedido > -1){
             const valorAntigo = BDcontas[indiceMesaParaAdicionarPedido].valorConta ;
             const valorNovo = valorPedido + valorAntigo;
             BDcontas[indiceMesaParaAdicionarPedido].valorConta = valorNovo;
             axios.post('http://localhost:1000/eventos', {
+            // axios.post('http://barramento-de-eventos-service:1000/eventos', {
                 tipo: 'AtualizarContaMesa',
                 dados: {
                     idMesa: novoPedido.idMesa,
@@ -43,6 +44,7 @@ const funcoes = {
             console.log('Falha ao adicionar valor na conta da mesa. Mesa não encontrada.');
         }
         axios.post('http://localhost:1000/eventos', {
+        // axios.post('http://barramento-de-eventos-service:1000/eventos', {
             tipo: 'DefinirValorPedido',
             dados: {
                 idMesa: novoPedido.idMesa,
@@ -64,6 +66,7 @@ const funcoes = {
             const valorNovo =  valorAntigo - valorRetirar;
             BDcontas[indiceMesaParaAdicionarPedido].valorConta = valorNovo;
             axios.post('http://localhost:1000/eventos', {
+            // axios.post('http://barramento-de-eventos-service:1000/eventos', {
                 tipo: 'AtualizarContaMesa',
                 dados: {
                     idMesa: pedidoCancelado.idMesa,

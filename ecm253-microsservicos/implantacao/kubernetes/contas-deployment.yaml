@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: contas-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: contas
+    template:
+        metadata:
+            labels:
+                app: contas
+        spec:
+            containers:
+              - name: contas
+                image: guslos/contas
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: contas-clusterip-service
+spec:
+    selector:
+        app: contas
+    # type: ClusterIP
+    ports:
+      - name: contas
+        protocol: TCP
+        port: 6000
+        targetPort: 6000

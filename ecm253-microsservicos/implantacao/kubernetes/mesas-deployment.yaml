@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: mesas-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: mesas
+    template:
+        metadata:
+            labels:
+                app: mesas
+        spec:
+            containers:
+              - name: mesas
+                image: guslos/mesas
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: mesas-clusterip-service
+spec:
+    selector:
+        app: mesas
+    # type: ClusterIP
+    ports:
+      - name: mesas
+        protocol: TCP
+        port: 2000
+        targetPort: 2000

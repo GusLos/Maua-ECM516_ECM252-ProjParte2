@@ -39,7 +39,6 @@ const funcoes = {
         BDconsulta[valorPedido.idMesa]['pedidos'][valorPedido.idPedido].valorPedido = valorPedido.valorPedido;
     },
     PedidoCanceladoConfirmado: (pedidoCancelado) => {
-        // delete BDconsulta[pedidoCancelado.idMesa]['pedidos'][pedidoCancelado.idPedido]
         BDconsulta[pedidoCancelado.idMesa]['pedidos'][pedidoCancelado.idPedido].status = pedidoCancelado.status;
     },
     PedidoProntoConfirmado: (pedidoPronto) => {
@@ -68,6 +67,7 @@ app.post('/eventos', (req, res) => {
 app.listen(4000, async () => {
     console.log('Consultas. Porta 4000.');
     const resp = await axios.get('http://localhost:1000/eventos');
+    // const resp = await axios.get('http://barramento-de-eventos-service:1000/eventos');
     resp.data.forEach((valor, indice, colecao) => {
         try {
             funcoes[valor.tipo](valor.dados);
