@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: status-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: status
+    template:
+        metadata:
+            labels:
+                app: status
+        spec:
+            containers:
+              - name: status
+                image: guslos/status
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: status-clusterip-service
+spec:
+    selector:
+        app: status
+    # type: ClusterIP
+    ports:
+      - name: status
+        protocol: TCP
+        port: 5000
+        targetPort: 5000

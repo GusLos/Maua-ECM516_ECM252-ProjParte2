@@ -20,6 +20,7 @@ const funcoes = {
             console.log('Falha ao atualizar pedido. Pedido não existe.')
         }
         axios.post('http://localhost:1000/eventos', {
+        // axios.post('http://barramento-de-eventos-service:1000/eventos', {
             tipo: 'PedidoAtualizado',
             dados: pedido
         })
@@ -33,6 +34,7 @@ const funcoes = {
             }
         }
         await axios.post('http://localhost:1000/eventos', {
+        // await axios.post('http://barramento-de-eventos-service:1000/eventos', {
             tipo: 'PedidoCanceladoConfirmado',
             dados: pedidoCancelado
         });
@@ -46,6 +48,7 @@ const funcoes = {
             }
         }
         await axios.post('http://localhost:1000/eventos', {
+        // await axios.post('http://barramento-de-eventos-service:1000/eventos', {
             tipo: 'PedidoProntoConfirmado',
             dados: pedidoPronto
         });
@@ -68,16 +71,17 @@ app.post('/mesas/:idMesa/pedidos', async (req, res) => {
     const pedidoNovo = {idPedido, idMesa: req.params.idMesa, tipoPedido: req.body.tipoPedido, horaPedido, ...req.body, status: status.ENVIANDO_COZINHA}; // Mudar isso
     BDpedidos.push(pedidoNovo);
     await axios.post('http://localhost:1000/eventos', {
+    // await axios.post('http://barramento-de-eventos-service:1000/eventos', {
         tipo: 'PedidoCriado',
         dados: pedidoNovo
     });
-    // res.status(201).send(pedidosDaMesa);
     res.status(200).send({msg: 'OK'})
 });
 
 app.put('/pedido', async (req, res) => {
     const pedidoParaAtualizar = BDpedidos.find(p => p.idPedido === req.body.idPedido);
     await axios.post('http://localhost:1000/eventos', {
+    // await axios.post('http://barramento-de-eventos-service:1000/eventos', {
         tipo: definirAcaoPedido(req.body.acao),
         dados: pedidoParaAtualizar
     })

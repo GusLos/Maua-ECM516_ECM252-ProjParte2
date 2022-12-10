@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const axios = require('axios');
+const cors = require('cors');
 app.use(express.json());
+app.use(cors())
 
 const BDconsulta = {};
 
@@ -37,10 +39,10 @@ const funcoes = {
         BDconsulta[valorPedido.idMesa]['pedidos'][valorPedido.idPedido].valorPedido = valorPedido.valorPedido;
     },
     PedidoCanceladoConfirmado: (pedidoCancelado) => {
-        delete BDconsulta[pedidoCancelado.idMesa]['pedidos'][pedidoCancelado.idPedido]
+        BDconsulta[pedidoCancelado.idMesa]['pedidos'][pedidoCancelado.idPedido].status = pedidoCancelado.status;
     },
-    PedidoProntoConfirmado: (pedido) => {
-        BDconsulta[pedido.idMesa]['pedidos'][pedido.idPedido].status = pedido.status;
+    PedidoProntoConfirmado: (pedidoPronto) => {
+        BDconsulta[pedidoPronto.idMesa]['pedidos'][pedidoPronto.idPedido].status = pedidoPronto.status;
     },
     MesaFechadaConfirmada: (mesaFechada) => {
         BDconsulta[mesaFechada.idMesa].status = mesaFechada.status;
@@ -49,6 +51,10 @@ const funcoes = {
 
 app.get('/mesas', (req, res) => {
     res.status(200).send(BDconsulta);
+});
+
+app.get('/mesas/:idMesa', (req, res) => {
+    res.status(200).send(BDconsulta[req.params.idMesa]);
 });
 
 app.post('/eventos', (req, res) => {
@@ -61,6 +67,7 @@ app.post('/eventos', (req, res) => {
 app.listen(4000, async () => {
     console.log('Consultas. Porta 4000.');
     const resp = await axios.get('http://localhost:1000/eventos');
+    // const resp = await axios.get('http://barramento-de-eventos-service:1000/eventos');
     resp.data.forEach((valor, indice, colecao) => {
         try {
             funcoes[valor.tipo](valor.dados);

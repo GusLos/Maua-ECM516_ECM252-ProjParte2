@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: pedidos-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: pedidos
+    template:
+        metadata:
+            labels:
+                app: pedidos
+        spec:
+            containers:
+              - name: pedidos
+                image: guslos/pedidos
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: pedidos-clusterip-service
+spec:
+    selector:
+        app: pedidos
+    # type: ClusterIP
+    ports:
+      - name: pedidos
+        protocol: TCP
+        port: 3000
+        targetPort: 3000
